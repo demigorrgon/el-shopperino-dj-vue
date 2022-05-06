@@ -14,7 +14,7 @@ class Product(models.Model):
     category = models.ForeignKey(
         Category, related_name="product", on_delete=models.CASCADE
     )
-    name = models.CharField(max_length=100, required=True, db_index=True)
+    name = models.CharField(max_length=100, db_index=True)
     description = models.TextField(max_length=255)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
