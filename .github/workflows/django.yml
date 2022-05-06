@@ -17,7 +17,6 @@ jobs:
       postgres:
         image: postgres:14
         env:
-          SECRET_KEY: ${{secrets.SECRET_KEY}}
           POSTGRES_USER: ${{secrets.POSTGRES_USER}}
           POSTGRES_PASSWORD: ${{secrets.POSTGRESS_PASSWORD}}
           POSTGRES_DB: 'el-shopperinodb'
@@ -36,5 +35,7 @@ jobs:
           pip install coverage
 
       - name: Run Tests
+        env:
+          SECRET_KEY: ${{secrets.SECRET_KEY}}
         run: |
           coverage run -m pytest tests/
