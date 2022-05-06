@@ -17,9 +17,10 @@ jobs:
       postgres:
         image: postgres:14
         env:
-          POSTGRES_USER: ${{secrets.SECRET_KEY}}
-          POSTGRES_PASSWORD: ${{secrets.POSTGRES_USER}}
-          POSTGRES_DB: ${{secrets.POSTGRESS_PASSWORD}}
+          SECRET_KEY: ${{secrets.SECRET_KEY}}
+          POSTGRES_USER: ${{secrets.POSTGRES_USER}}
+          POSTGRES_PASSWORD: ${{secrets.POSTGRESS_PASSWORD}}
+          POSTGRES_DB: 'el-shopperinodb'
         ports: ['5432:5432']
         # options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
