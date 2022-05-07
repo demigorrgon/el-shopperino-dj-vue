@@ -2,7 +2,7 @@ name: Django CI
 
 on:
   push:
-    branches: [main, dev, feature/store-models]
+    branches: [dev, feature/store-models]
   pull_request:
     branches: [main, dev]
 
@@ -21,6 +21,8 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: postgres
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
         ports: 
         - 5432/tcp
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
@@ -37,6 +39,7 @@ jobs:
           pip install -r requirements.txt
 
           pip install coverage
+        
 
       - name: Run Tests
         env:
@@ -45,6 +48,7 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: postgres
+          POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
           DATABASE_URL: 'postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres'
         run: |
           coverage run -m pytest tests/
