@@ -44,16 +44,7 @@ jobs:
       - name: Run Tests
         env:
           SECRET_KEY: ${{secrets.SECRET_KEY}}
-          POSTGRES_HOST: postgres
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: postgres
-          POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
           DATABASE_URL: 'postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres'
         run: |
           coverage run -m pytest tests/
           coverage report
-
-      - name: Run Tests
-        run: |
-          coverage run -m pytest tests/
