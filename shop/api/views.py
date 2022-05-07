@@ -13,5 +13,4 @@ class ProductViewSet(viewsets.ModelViewSet):
 
     def get_object(self, queryset=None, **kwargs):
         obj = self.kwargs.get("pk")
-        # print(self.kwargs)
         return get_object_or_404(Product, slug=obj)
