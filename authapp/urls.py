@@ -3,5 +3,5 @@ from authapp.api.views import UserCreateViewSet
 
 
 router = routers.DefaultRouter()
-router.register("", UserCreateViewSet, basename="user")
+router.register("auth", UserCreateViewSet, basename="user")
 urlpatterns = router.urls
