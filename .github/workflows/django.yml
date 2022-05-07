@@ -2,7 +2,7 @@ name: Django CI
 
 on:
   push:
-    branches: [dev, feature/store-models]
+    branches: [dev, feature/store-models, feature/auth]
   pull_request:
     branches: [main, dev]
 
