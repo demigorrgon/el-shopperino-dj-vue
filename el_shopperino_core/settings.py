@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "shop",
     "authapp",
+    "profiles",
     # 3rd party
     "rest_framework",
     "rest_framework_simplejwt",

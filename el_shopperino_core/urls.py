@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, re_path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
@@ -25,6 +25,7 @@ urlpatterns = [
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("api/v1/auth/", include("authapp.api.urls")),
     path("api/v1/shop/", include("shop.api.urls")),
+    re_path(r"api/v1/profiles?", include("profiles.api.urls")),
 ]
 
 if settings.DEBUG:
