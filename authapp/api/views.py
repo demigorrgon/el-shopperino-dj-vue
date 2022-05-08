@@ -1,8 +1,8 @@
 from rest_framework import viewsets
 from rest_framework import permissions
 from django.contrib.auth.models import User
-
-from authapp.serializers import UserCreateSerializer, UserSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+from authapp.serializers import UserCreateSerializer, UserSerializer, CustomObtainToken
 
 
 class UserCreateViewSet(viewsets.ModelViewSet):
@@ -14,3 +14,7 @@ class UserCreateViewSet(viewsets.ModelViewSet):
             return UserSerializer
 
         return UserCreateSerializer
+
+
+class TokenObtainUsernameView(TokenObtainPairView):
+    serializer_class = CustomObtainToken
