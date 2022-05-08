@@ -5,13 +5,14 @@ from django.urls import include, path
 
 # from rest_framework.documentation import include_docs_urls
 # from rest_framework.schemas import get_schema_view
-from rest_framework_simplejwt.views import TokenRefreshView
+from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
 from authapp.api.views import TokenObtainUsernameView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/token/", TokenObtainUsernameView.as_view(), name="token_obtain_pair"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("api/token/verify/", TokenVerifyView.as_view(), name="token_verify"),
     # path("docs/", include_docs_urls(title="el-shopperinjoAPI")),
     # path(
     #     "schema",
@@ -23,7 +24,6 @@ urlpatterns = [
     path("v1/api/", include("authapp.api.urls")),
     path("api/v1/auth/", include("authapp.api.urls")),
     path("api/v1/shop/", include("shop.api.urls")),
-
 ]
 
 if settings.DEBUG:
