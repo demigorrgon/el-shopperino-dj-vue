@@ -21,6 +21,9 @@ urlpatterns = [
     #     name="coreapi_schema",
     # ),
     path("v1/api/", include("authapp.api.urls")),
+    path("api/v1/auth/", include("authapp.api.urls")),
+    path("api/v1/shop/", include("shop.api.urls")),
+
 ]
 
 if settings.DEBUG:
