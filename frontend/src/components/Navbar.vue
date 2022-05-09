@@ -26,7 +26,7 @@
         <a href="#" @click="logout">Logout</a>
       </vs-navbar-item>
       <vs-navbar-item index="3">
-        <a href="#">Cart</a>
+        <a href="#" @click="toggleCart()">Cart</a>
       </vs-navbar-item>
     </div>
   </vs-navbar>
@@ -34,7 +34,11 @@
 
 <script>
 import { mapGetters, mapState, mapMutations } from "vuex";
+
 export default {
+  data: () => {
+    return {};
+  },
   computed: {
     ...mapGetters(["activeUser", "tokenValid"]),
     ...mapState(["isTokenValid"]),
@@ -43,6 +47,9 @@ export default {
     ...mapMutations(["logout"]),
     logout() {
       this.$store.commit("logout");
+    },
+    toggleCart() {
+      this.open = !this.open;
     },
   },
 };
