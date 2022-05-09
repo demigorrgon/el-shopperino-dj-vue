@@ -6,20 +6,18 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-
 export default {
   name: "Home",
   data: () => {
     return {};
   },
-  computed: {
-    ...mapState(["tokenValid"]),
-  },
 
   methods: {
     verify() {
-      console.log(this.$store.dispatch("isTokenValid"));
+      this.$store.dispatch("isTokenValid");
+      if (this.$store.getters.tokenValid === false) {
+        console.log("complain");
+      }
     },
   },
 };

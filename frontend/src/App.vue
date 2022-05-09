@@ -1,24 +1,35 @@
 <template>
   <div id="app">
     <Navbar />
+    <div class="relogin-modal" v-if="isValid() === false">
+      <SessionExpired />
+    </div>
     <router-view />
   </div>
 </template>
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapGetters } from "vuex";
 import Navbar from "@/components/Navbar.vue";
+import SessionExpired from "@/components/SessionExpired.vue";
 export default {
   components: {
     Navbar,
+    SessionExpired,
   },
-  created() {
+  mounted() {
     this.$store.dispatch("isTokenValid");
     if (this.$store.getters.tokenValid === false) {
       this.$store.commit("logout");
     }
   },
-  methods: {},
-  computed: { ...mapGetters(["activeUser"]), ...mapState(["isTokenValid"]) },
+  methods: {
+    isValid() {
+      return this.$store.getters.tokenValid;
+    },
+  },
+  computed: {
+    ...mapGetters(["activeUser", "isTokenValid"]),
+  },
 };
 </script>
 <style>
@@ -50,5 +61,11 @@ img {
 .item-wrapper {
   display: flex;
   margin-right: 100px;
+}
+
+.relogin-modal {
+  /* border: 1px solid gray; */
+  display: flex;
+  margin: 0px 300px 20px 300px;
 }
 </style>
