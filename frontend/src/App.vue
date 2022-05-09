@@ -20,11 +20,11 @@
       </div>
       <div class="item-wrapper">
         <vs-navbar-item index="0">
-          <a href="#" v-if="!isLoggedIn">Home</a>
+          <a href="#" v-if="activeUser === null">Home</a>
           <a href="#" v-else>Some user</a>
         </vs-navbar-item>
         <vs-spacer></vs-spacer>
-        <vs-navbar-item index="1" v-if="!isLoggedIn">
+        <vs-navbar-item index="1" v-if="activeUser === null">
           <!-- <a href="#">News</a> -->
           <router-link to="/login">Login</router-link>
         </vs-navbar-item>
@@ -41,11 +41,11 @@ import { mapGetters } from "vuex";
 export default {
   data: () => {
     return {
-      isLoggedIn: this.isLoggedIn,
+      // isLoggedIn: this.isLoggedIn,
     };
   },
   methods: {},
-  computed: { ...mapGetters(["isLoggedIn"]) },
+  computed: { ...mapGetters(["activeUser"]) },
 };
 </script>
 <style>
