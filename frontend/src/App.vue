@@ -1,20 +1,16 @@
 <template>
   <div id="app">
     <Navbar />
-    <div class="relogin-modal" v-if="isValid() === false">
-      <SessionExpired />
-    </div>
+
     <router-view />
   </div>
 </template>
 <script>
 import { mapGetters } from "vuex";
 import Navbar from "@/components/Navbar.vue";
-import SessionExpired from "@/components/SessionExpired.vue";
 export default {
   components: {
     Navbar,
-    SessionExpired,
   },
   mounted() {
     this.$store.dispatch("isTokenValid");
@@ -22,11 +18,7 @@ export default {
       this.$store.commit("logout");
     }
   },
-  methods: {
-    isValid() {
-      return this.$store.getters.tokenValid;
-    },
-  },
+  methods: {},
   computed: {
     ...mapGetters(["activeUser", "isTokenValid"]),
   },
