@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { verifyToken } from '@/api/shortcuts'
+import { verifyToken, loadProductsResults } from '@/api/shortcuts'
 import jwt_decode from 'jwt-decode'
 import createPersistedState from 'vuex-persistedstate'
 Vue.use(Vuex)
@@ -10,7 +10,8 @@ export default new Vuex.Store({
     user: null,
     accessToken: null,
     refreshToken: null,
-    tokenValid: null
+    tokenValid: null,
+    products: null,
 
   },
   getters: {
@@ -46,6 +47,9 @@ export default new Vuex.Store({
       state.user = null
       state.accessToken = null
       state.refreshToken = null
+    },
+    setProducts(state, products) {
+      state.products = products
     }
   },
   actions: {
@@ -58,6 +62,12 @@ export default new Vuex.Store({
         console.log(err.response.data.detail); commit('isTokenValid', false)
       })
 
+    },
+    loadProducts({ commit }) {
+      return loadProductsResults().then((response) => {
+        console.log(response.data.response)
+        commit('setProducts', response.data)
+      })
     }
   },
   plugins: [createPersistedState()]
