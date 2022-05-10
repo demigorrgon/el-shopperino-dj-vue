@@ -15,8 +15,8 @@
     </vs-row>
     <p>wasda</p>
     <button @click="verify">verify jwt</button>
-    <div class="cart" v-if="toggleCart === true">
-      <CartModal />
+    <div class="cart" v-if="toggleCart">
+      <CartModal @closeCart="toggleCartVisible()" />
     </div>
     <br />
     <button @click="toggleCartVisible">cart</button>

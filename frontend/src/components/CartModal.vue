@@ -1,14 +1,31 @@
 <template>
   <div class="modal-cart">
     <div class="modal-content">
-      <span class="close">&times;</span>
-      <p>Some text in the Modal..</p>
+      <vs-row>
+        <vs-col vs-w="12" vs-offset="11">
+          <span class="close" @click="toggleCart()">
+            <vs-button
+              color="danger"
+              class="close-button"
+              style="height: 35px; width: 35px; border-radius: 10px"
+              >x</vs-button
+            ></span
+          >
+        </vs-col>
+      </vs-row>
+      <p>Cart I guess</p>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    toggleCart() {
+      this.$emit("closeCart");
+    },
+  },
+};
 </script>
 
 <style>
@@ -53,6 +70,11 @@ export default {};
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   animation-name: animatetop;
   animation-duration: 0.4s;
+}
+.close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 /* Add Animation */
