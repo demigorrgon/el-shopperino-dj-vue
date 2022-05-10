@@ -22,10 +22,10 @@
       <vs-navbar-item index="1" v-if="activeUser === null">
         <router-link to="/login">Login</router-link>
       </vs-navbar-item>
-      <vs-navbar-item index="2">
+      <vs-navbar-item index="2" v-if="activeUser !== null">
         <a href="#" @click="logout">Logout</a>
       </vs-navbar-item>
-      <vs-navbar-item index="3">
+      <vs-navbar-item index="3" v-if="activeUser !== null">
         <a href="#" @click="toggleCart()">Cart</a>
       </vs-navbar-item>
     </div>
