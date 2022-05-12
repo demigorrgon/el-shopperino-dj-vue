@@ -16,7 +16,11 @@
     <p>wasda</p>
     <button @click="verify">verify jwt</button>
     <div class="cart" v-if="toggleCart">
-      <CartModal @closeCart="toggleCartVisible()" />
+      <vs-row>
+        <vs-col vs-w="6" vs-offset="3">
+          <CartModal @closeCart="toggleCartVisible()" />
+        </vs-col>
+      </vs-row>
     </div>
     <br />
     <button @click="toggleCartVisible">cart</button>
