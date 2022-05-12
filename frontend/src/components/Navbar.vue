@@ -8,7 +8,7 @@
   >
     <div slot="title">
       <vs-navbar-title style="margin-left: 100px">
-        <img src="@/assets/goblin-head.png" />
+        <img src="@/assets/goblin-head.png" class="logo" />
       </vs-navbar-title>
     </div>
     <div class="item-wrapper">
