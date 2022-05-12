@@ -12,6 +12,7 @@ export default new Vuex.Store({
     refreshToken: null,
     tokenValid: null,
     products: null,
+    cart: [],
 
   },
   getters: {
@@ -20,6 +21,9 @@ export default new Vuex.Store({
     },
     tokenValid(state) {
       return state.tokenValid
+    },
+    itemsInCart(state) {
+      return state.cart
     }
   },
   mutations: {
@@ -50,7 +54,17 @@ export default new Vuex.Store({
     },
     setProducts(state, products) {
       state.products = products
-    }
+    },
+    addItemToCart(state, cartItem) {
+      if (state.cart.some(cartitem => cartitem.id === cartItem.id) === true) {
+        console.log(cartItem)
+        cartItem.amount++
+      } else {
+        cartItem.amount = 1
+        state.cart.push(cartItem)
+      }
+
+    },
   },
   actions: {
     isTokenValid({ commit }) {
