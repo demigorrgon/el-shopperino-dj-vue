@@ -6,15 +6,28 @@
     <br />
     <p class="product-price">${{ product.price }}</p>
     <p class="product-description">{{ product.description }}</p>
-    <vs-button color="success" type="gradient" style="margin-bottom: 10px"
+    <vs-button
+      color="success"
+      type="gradient"
+      style="margin-bottom: 10px"
+      @click="addToCart()"
       >Add to cart</vs-button
     >
   </div>
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 export default {
   props: ["product"],
+  methods: {
+    addToCart() {
+      this.$store.commit("addItemToCart", this.$props.product);
+    },
+  },
+  computed: {
+    ...mapMutations(["addItemToCart"]),
+  },
 };
 </script>
 
