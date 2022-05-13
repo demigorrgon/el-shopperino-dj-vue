@@ -20,11 +20,13 @@
           <ProductCard :product="product" />
         </vs-col>
       </vs-col>
-      <vs-pagination
-        :total="products['total_pages']"
-        v-model="currentPage"
-        :max="5"
-      ></vs-pagination>
+      <vs-col vs-offset="-5">
+        <vs-pagination
+          :total="products['total_pages']"
+          v-model="currentPage"
+          :max="5"
+        ></vs-pagination>
+      </vs-col>
     </vs-row>
   </div>
 </template>
