@@ -63,8 +63,13 @@ export default new Vuex.Store({
         cartItem.amount = 1
         state.cart.push(cartItem)
       }
-
     },
+    removeItemFromCart(state, cartItemIndex) {
+      // console.log(state.cart)
+      console.log(state.cart[cartItemIndex])
+      console.log(state.cart.splice(cartItemIndex, 1))
+      // console.log(state.cart.forEach(item => item == cartItem))
+    }
   },
   actions: {
     isTokenValid({ commit }) {

@@ -5,9 +5,10 @@
         <vs-col vs-w="12" vs-offset="11">
           <span class="close" @click="toggleCart()">
             <vs-button
+              radius
               color="danger"
               class="close-button"
-              style="height: 35px; width: 35px; border-radius: 10px"
+              style="height: 35px; width: 35px"
               >x</vs-button
             ></span
           >
@@ -18,7 +19,7 @@
 
         <div v-for="(item, index) in itemsInCart" :key="item[index]">
           <vs-row vs-align="center" vs-justify="center">
-            <vs-col style="display: inline-flex">
+            <vs-col style="display: inline-flex" vs-align="center">
               <vs-col vs-w="1">
                 <img :src="item.image" class="cart-picture" />
               </vs-col>
@@ -40,6 +41,14 @@
               </vs-col>
               <!-- <p style="margin-left: 10px">{{ amount }}</p>
               <p>{{ item.price * amount[index] }}</p> -->
+              <vs-button
+                radius
+                color="danger"
+                type="gradient"
+                icon="close"
+                style="margin-left: 20px; height: 85%"
+                @click="removeFromCart(index)"
+              ></vs-button>
             </vs-col>
           </vs-row>
           <br />
@@ -53,7 +62,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapGetters, mapState, mapMutations } from "vuex";
 export default {
   data: () => {
     return {
@@ -79,19 +88,32 @@ export default {
             this.itemsInCart[index].amount * this.itemsInCart[index].price;
         } else if (this.amount[index] >= 20) {
           this.danger = true;
+          this.amount[index] = 20;
           totalPrice += this.amount[index] * this.itemsInCart[index].price;
         } else {
+          if (this.amount[index] < 1) {
+            this.amount[index] = 1;
+          }
           this.danger = false;
           totalPrice += this.amount[index] * this.itemsInCart[index].price;
         }
       }
       this.totalPrice = totalPrice;
     },
+    removeFromCart(index) {
+      this.$store.commit("removeItemFromCart", index);
+    },
   },
   computed: {
     ...mapGetters(["itemsInCart"]),
     ...mapState(["cart"]),
+    ...mapMutations(["removeItemFromCart"]),
   },
+  // watch: {
+  //   amount(old, newAmount) {
+  //     console.log(newAmount);
+  //   },
+  // },
 };
 </script>
 
