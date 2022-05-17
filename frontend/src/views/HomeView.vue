@@ -1,5 +1,6 @@
 <template>
   <div class="root">
+    <Navbar @closeCart="toggleCartVisible()" />
     <vs-row>
       <vs-col
         vs-type="flex"
@@ -35,10 +36,12 @@
 import CartModal from "../components/CartModal.vue";
 import SessionExpired from "../components/SessionExpired.vue";
 import ProductItem from "../components/ProductItem.vue";
+import Navbar from "../components/Navbar.vue";
 import { mapGetters } from "vuex";
 export default {
   name: "Home",
   components: {
+    Navbar,
     CartModal,
     SessionExpired,
     ProductItem,
