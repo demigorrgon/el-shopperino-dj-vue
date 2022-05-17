@@ -8,19 +8,22 @@
   >
     <div slot="title">
       <vs-navbar-title style="margin-left: 100px">
-        <img src="@/assets/goblin-head.png" class="logo" />
+        <a href="/"> <img src="@/assets/goblin-head.png" class="logo" /></a>
       </vs-navbar-title>
     </div>
     <div class="item-wrapper">
       <vs-navbar-item index="0">
         <a href="#" v-if="activeUser === null">Home</a>
         <a href="#" v-else
-          ><i>{{ this.$store.state.user }}</i></a
+          ><i>{{ this.$store.state.user.username }}</i></a
         >
       </vs-navbar-item>
       <vs-spacer></vs-spacer>
       <vs-navbar-item index="1" v-if="activeUser === null">
         <router-link to="/login">Login</router-link>
+      </vs-navbar-item>
+      <vs-navbar-item index="2" v-if="activeUser === null">
+        <router-link to="/register">Register</router-link>
       </vs-navbar-item>
       <vs-navbar-item index="2" v-if="activeUser !== null">
         <a href="#" @click="logout">Logout</a>
@@ -48,8 +51,11 @@ export default {
     logout() {
       this.$store.commit("logout");
     },
+    // toggleCart() {
+    //   this.open = !this.open;
+    // },
     toggleCart() {
-      this.open = !this.open;
+      this.$emit("closeCart");
     },
   },
 };
