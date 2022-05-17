@@ -1,51 +1,23 @@
 <template>
   <div id="app">
-    <!-- <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/login">Login</router-link>
-    </nav>
-    <router-view /> -->
-    <vs-navbar
-      v-model="indexActive"
-      color="black"
-      text-color="white"
-      active-text-color="white"
-      class="myNavbar"
-      style="border-radius: 0px 0px 20px 20px"
-    >
-      <div slot="title">
-        <vs-navbar-title style="margin-left: 100px">
-          <img src="@/assets/goblin-head.png" />
-        </vs-navbar-title>
-      </div>
-      <div class="item-wrapper">
-        <vs-navbar-item index="0">
-          <a href="#" v-if="!isLoggedIn">Home</a>
-          <a href="#" v-else>Some user</a>
-        </vs-navbar-item>
-        <vs-spacer></vs-spacer>
-        <vs-navbar-item index="1" v-if="!isLoggedIn">
-          <!-- <a href="#">News</a> -->
-          <router-link to="/login">Login</router-link>
-        </vs-navbar-item>
-        <vs-navbar-item index="2">
-          <a href="#">Cart</a>
-        </vs-navbar-item>
-      </div>
-    </vs-navbar>
     <router-view />
   </div>
 </template>
 <script>
 import { mapGetters } from "vuex";
+// import Navbar from "@/components/Navbar.vue";
 export default {
-  data: () => {
-    return {
-      isLoggedIn: this.isLoggedIn,
-    };
+  components: {},
+  mounted() {
+    this.$store.dispatch("isTokenValid");
+    if (this.$store.getters.tokenValid === false) {
+      this.$store.commit("logout");
+    }
   },
   methods: {},
-  computed: { ...mapGetters(["isLoggedIn"]) },
+  computed: {
+    ...mapGetters(["activeUser", "isTokenValid"]),
+  },
 };
 </script>
 <style>
@@ -70,12 +42,18 @@ nav a.router-link-exact-active {
   color: #42b983;
 }
 
-img {
+.logo {
   width: 10%;
 }
 
 .item-wrapper {
   display: flex;
   margin-right: 100px;
+}
+
+.relogin-modal {
+  /* border: 1px solid gray; */
+  display: flex;
+  margin: 0px 300px 20px 300px;
 }
 </style>

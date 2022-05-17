@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 // import HomeView from '../views/HomeView.vue'
-import Login from '@/components/Login.vue'
-import Home from '@/components/Home.vue'
+import LoginView from '@/views/LoginView.vue'
+import HomeView from '@/views/HomeView.vue'
+import CheckoutView from '@/views/CheckoutView.vue'
+import SuccessView from '@/views/SuccessView.vue'
 
 
 Vue.use(VueRouter)
@@ -11,13 +13,23 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: Home
+    component: HomeView
   },
   {
     path: '/login',
     name: 'Login',
-    component: Login,
-  }
+    component: LoginView,
+  },
+  {
+    path: '/checkout',
+    name: 'Checkout',
+    component: CheckoutView,
+  },
+  {
+    path: '/checkout/success',
+    name: 'Success',
+    component: SuccessView,
+  },
 ]
 
 const router = new VueRouter({

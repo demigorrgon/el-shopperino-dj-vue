@@ -19,5 +19,12 @@ const verifyToken = (token) => {
     return httpClient.post('api/token/verify/', { token })
 }
 
+const loadProductsResults = () => {
+    return httpClient.get('/api/v1/shop/products/')
+}
 
-export { obtainToken, verifyToken }
+const sendOrder = (order) => {
+    return httpClient.post('/api/v1/shop/orders/', order)
+}
+
+export { obtainToken, verifyToken, loadProductsResults, sendOrder }

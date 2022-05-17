@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <Navbar />
     <h1>Login</h1>
     <br />
     <form>
@@ -25,6 +26,7 @@
           <vs-button color="dark" type="border" @click="login">Login</vs-button>
           <!-- <button type="submit">Login</button> -->
         </vs-col>
+        <vs-col style="margin-top: 10px"><a href="#">Register?</a></vs-col>
       </vs-row>
     </form>
   </div>
@@ -33,9 +35,13 @@
 <script>
 import { obtainToken } from "../api/shortcuts.js";
 import { mapMutations } from "vuex";
+import Navbar from "../components/Navbar.vue";
 export default {
   data: () => {
     return { username: "", password: "" };
+  },
+  components: {
+    Navbar,
   },
   methods: {
     ...mapMutations(["setAccessToken", "setRefreshToken", "authorizeUser"]),
