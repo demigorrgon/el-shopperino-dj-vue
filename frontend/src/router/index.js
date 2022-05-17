@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import LoginView from '@/views/LoginView.vue'
 import HomeView from '@/views/HomeView.vue'
 import CheckoutView from '@/views/CheckoutView.vue'
+import SuccessView from '@/views/SuccessView.vue'
 
 
 Vue.use(VueRouter)
@@ -23,6 +24,11 @@ const routes = [
     path: '/checkout',
     name: 'Checkout',
     component: CheckoutView,
+  },
+  {
+    path: '/checkout/success',
+    name: 'Success',
+    component: SuccessView,
   },
 ]
 
