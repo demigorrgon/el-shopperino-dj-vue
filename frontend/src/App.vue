@@ -1,17 +1,13 @@
 <template>
   <div id="app">
-    <Navbar />
-
     <router-view />
   </div>
 </template>
 <script>
 import { mapGetters } from "vuex";
-import Navbar from "@/components/Navbar.vue";
+// import Navbar from "@/components/Navbar.vue";
 export default {
-  components: {
-    Navbar,
-  },
+  components: {},
   mounted() {
     this.$store.dispatch("isTokenValid");
     if (this.$store.getters.tokenValid === false) {
