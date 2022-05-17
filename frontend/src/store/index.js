@@ -30,7 +30,7 @@ export default new Vuex.Store({
     authorizeUser(state) {
       const decodedToken = jwt_decode(localStorage.getItem('accessToken'))
       // check if valid on top of it
-      state.user = decodedToken.username
+      state.user = { "id": decodedToken.user_id, "username": decodedToken.username }
     },
     setAccessToken(state, token) {
       // state.accessToken = token;
@@ -69,6 +69,9 @@ export default new Vuex.Store({
       console.log(state.cart[cartItemIndex])
       console.log(state.cart.splice(cartItemIndex, 1))
       // console.log(state.cart.forEach(item => item == cartItem))
+    },
+    emptyCartOnOrderSubmission(state) {
+      state.cart = []
     }
   },
   actions: {
