@@ -9,14 +9,22 @@ def test_user_can_create_product(product):
 
 
 def test_get_all_products(api, product):
-    url = reverse("shop-list")
+    url = reverse("product-list")
     response = api.get(url)
     assert response.data["count"] == 1
 
 
-def test_get_single_product(api, product):
-    # url = reverse("shop-list", kwargs={"pk": product.slug})
-    url = "/api/v1/shop/" + product.slug + "/"
+def test_get_single_product_by_id(api, product):
+    url = reverse("product-detail-pk", kwargs={"pk": product.pk})
+    # url = "/api/v1/shop/product/" + product.slug + "/"
+    response = api.get(url)
+    assert response.status_code == 200
+    assert response.data["slug"] is not None
+
+
+def test_get_single_product_by_slug(api, product):
+    url = reverse("product-detail-slug", kwargs={"slug": product.slug})
+    # url = "/api/v1/shop/product/" + product.slug + "/"
     response = api.get(url)
     assert response.status_code == 200
     assert response.data["slug"] is not None

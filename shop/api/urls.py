@@ -3,6 +3,7 @@ from shop.api.views import ProductViewSet, OrderViewSet
 from rest_framework.urlpatterns import format_suffix_patterns
 from django.urls import path
 
+
 # router = routers.DefaultRouter()
 # router.register("", ProductViewSet, basename="shop")
 # router.register("order", OrderViewSet, basename="order")
@@ -29,8 +30,8 @@ order_detail = OrderViewSet.as_view(
 urlpatterns = format_suffix_patterns(
     [
         path("products/", product_list, name="product-list"),
-        path("products/<int:pk>/", product_detail, name="product-detail"),
-        path("products/<str:slug>/", product_detail, name="product-detail"),
+        path("product/<int:pk>/", product_detail, name="product-detail-pk"),
+        path("product/<str:slug>/", product_detail, name="product-detail-slug"),
         path("orders/", order_list, name="order-list"),
         path("orders/<int:pk>/", order_detail, name="order-detail"),
     ]
