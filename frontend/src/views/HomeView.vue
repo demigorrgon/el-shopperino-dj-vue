@@ -1,18 +1,76 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div class="root">
+    <Navbar @closeCart="toggleCartVisible()" />
+    <vs-row>
+      <vs-col
+        vs-type="flex"
+        vs-justify="center"
+        vs-align="center"
+        vs-w="6"
+        vs-offset="3"
+        class="relogin-modal"
+        v-if="isValid() === false"
+      >
+        <SessionExpired />
+      </vs-col>
+    </vs-row>
+    <p>wasda</p>
+    <button @click="verify">verify jwt</button>
+    <div class="cart" v-if="toggleCart">
+      <vs-row>
+        <vs-col vs-w="6" vs-offset="3">
+          <CartModal @closeCart="toggleCartVisible()" />
+        </vs-col>
+      </vs-row>
+    </div>
+    <br />
+    <button @click="toggleCartVisible">cart</button>
+    <br />
+    <br />
+    <br />
+    <ProductItem />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-
+import CartModal from "../components/CartModal.vue";
+import SessionExpired from "../components/SessionExpired.vue";
+import ProductItem from "../components/ProductItem.vue";
+import Navbar from "../components/Navbar.vue";
+import { mapGetters } from "vuex";
 export default {
-  name: "HomeView",
+  name: "Home",
   components: {
-    HelloWorld,
+    Navbar,
+    CartModal,
+    SessionExpired,
+    ProductItem,
+  },
+  data: () => {
+    return {
+      toggleCart: false,
+    };
+  },
+
+  methods: {
+    verify() {
+      this.$store.dispatch("isTokenValid");
+      if (this.$store.getters.tokenValid === false) {
+        console.log("complain");
+      }
+    },
+    isValid() {
+      return this.$store.getters.tokenValid;
+    },
+    toggleCartVisible() {
+      this.toggleCart = !this.toggleCart;
+    },
+  },
+  computed: {
+    ...mapGetters(["isTokenValid"]),
   },
 };
 </script>
+
+<style>
+</style>
