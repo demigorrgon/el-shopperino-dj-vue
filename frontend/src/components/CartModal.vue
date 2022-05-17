@@ -35,7 +35,7 @@
                   class="items-amount-cart"
                   :danger="danger"
                   danger-text="Are you sure you want THAT much? Current limit - 20"
-                  v-model="amount[index]"
+                  v-model="amounts[index]"
                   @input="checkout"
                 />
               </vs-col>
@@ -66,7 +66,7 @@ import { mapGetters, mapState, mapMutations } from "vuex";
 export default {
   data: () => {
     return {
-      amount: [],
+      amounts: [],
       totalPrice: 0,
       danger: false,
     };
@@ -80,25 +80,26 @@ export default {
 
       for (let index in this.itemsInCart) {
         if (
-          isNaN(this.amount[index]) ||
-          this.amount[index] === null ||
-          this.amount[index] === ""
+          isNaN(this.amounts[index]) ||
+          this.amounts[index] === null ||
+          this.amounts[index] === ""
         ) {
           totalPrice +=
-            this.itemsInCart[index].amount * this.itemsInCart[index].price;
-        } else if (this.amount[index] >= 20) {
+            this.itemsInCart[index].amounts * this.itemsInCart[index].price;
+        } else if (this.amounts[index] >= 20) {
           this.danger = true;
-          this.amount[index] = 20;
-          totalPrice += this.amount[index] * this.itemsInCart[index].price;
+          this.amounts[index] = 20;
+          totalPrice += this.amounts[index] * this.itemsInCart[index].price;
         } else {
-          if (this.amount[index] < 1) {
-            this.amount[index] = 1;
+          if (this.amounts[index] < 1) {
+            this.amounts[index] = 1;
           }
           this.danger = false;
-          totalPrice += this.amount[index] * this.itemsInCart[index].price;
+          totalPrice += this.amounts[index] * this.itemsInCart[index].price;
         }
       }
       this.totalPrice = totalPrice;
+      this.$router.push("/checkout");
     },
     removeFromCart(index) {
       this.$store.commit("removeItemFromCart", index);
