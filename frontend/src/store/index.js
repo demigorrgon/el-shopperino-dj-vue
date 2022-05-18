@@ -59,6 +59,7 @@ export default new Vuex.Store({
       state.user = null
       state.accessToken = null
       state.refreshToken = null
+      state.orders = []
     },
     setProducts(state, products) {
       state.products = products
@@ -88,7 +89,10 @@ export default new Vuex.Store({
     //   state.orders = []
     // }
     addItemToFavorites(state, product) {
-      state.favorites.push(product)
+      if (state.favorites.every((item) => item.id !== product.id) === true) {
+        state.favorites.push(product)
+      }
+
     }
   },
   actions: {
