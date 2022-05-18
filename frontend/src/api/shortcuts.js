@@ -27,4 +27,8 @@ const sendOrder = (order) => {
     return httpClient.post('/api/v1/shop/orders/', order)
 }
 
-export { obtainToken, verifyToken, loadProductsResults, sendOrder }
+const getUsersOrders = (userId) => {
+    return httpClient.get('/api/v1/shop/orders/user/' + userId + "/")
+}
+
+export { obtainToken, verifyToken, loadProductsResults, sendOrder, getUsersOrders }
