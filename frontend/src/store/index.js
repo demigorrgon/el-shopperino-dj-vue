@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { verifyToken, loadProductsResults } from '@/api/shortcuts'
+import { verifyToken, loadProductsResults, getUsersOrders } from '@/api/shortcuts'
 import jwt_decode from 'jwt-decode'
 import createPersistedState from 'vuex-persistedstate'
 Vue.use(Vuex)
@@ -13,6 +13,8 @@ export default new Vuex.Store({
     tokenValid: null,
     products: null,
     cart: [],
+    orders: [],
+    favorites: [],
 
   },
   getters: {
@@ -24,6 +26,12 @@ export default new Vuex.Store({
     },
     itemsInCart(state) {
       return state.cart
+    },
+    currentUserOrders(state) {
+      return state.orders
+    },
+    favoriteItems(state) {
+      return state.favorites
     }
   },
   mutations: {
@@ -72,6 +80,15 @@ export default new Vuex.Store({
     },
     emptyCartOnOrderSubmission(state) {
       state.cart = []
+    },
+    setCurrentUserOrders(state, orders) {
+      state.orders = orders
+    },
+    // emptyOrders(state) {
+    //   state.orders = []
+    // }
+    addItemToFavorites(state, product) {
+      state.favorites.push(product)
     }
   },
   actions: {
@@ -89,6 +106,12 @@ export default new Vuex.Store({
       return loadProductsResults().then((response) => {
         console.log(response.data.response)
         commit('setProducts', response.data)
+      })
+    },
+    loadOrders({ commit, getters }) {
+      return getUsersOrders(getters.activeUser.id).then((response) => {
+        console.log(response)
+        commit('setCurrentUserOrders', response.data.results)
       })
     }
   },
