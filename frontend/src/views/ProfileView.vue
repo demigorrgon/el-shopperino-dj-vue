@@ -8,6 +8,7 @@
             <vs-row vs-justify="center" class="menu-item"
               ><p @click="credentials">Credentials</p></vs-row
             >
+
             <vs-row vs-justify="center" class="menu-item"
               ><p @click="favorites">My favorites</p></vs-row
             >
@@ -28,9 +29,30 @@
           <vs-button color="dark" type="border">Submit</vs-button>
         </div>
         <div v-if="showFavorites">
-          <p class="credentials-tooltip">
-            <b><i>Favorite items:</i></b>
-          </p>
+          <p class="favorites-tooltip">Favorite items</p>
+          <vs-row
+            v-for="(item, index) in favoriteItems"
+            :key="index"
+            vs-align="center"
+            vs-justify="center"
+            class="favorite-item"
+          >
+            <vs-divider />
+            <vs-col vs-type="flex" vs-align="center" vs-justify="center">
+              <img :src="item.image" class="order-pic" />
+              <vs-col
+                vs-type="flex"
+                vs-w="2"
+                vs-align="center"
+                vs-justify="center"
+              >
+                <p class="order-text">
+                  <a href="#">{{ item.name }}</a> <br />${{ item.price }}
+                </p></vs-col
+              >
+            </vs-col>
+          </vs-row>
+          <!-- </p> -->
         </div>
         <div v-if="showOrders">
           <p class="credentials-tooltip">
@@ -41,6 +63,7 @@
                   v-for="order in this.$store.getters.currentUserOrders"
                   :key="order.id"
                 >
+                  <vs-divider />
                   <vs-col class="order-wrapper">
                     <vs-row
                       vs-type="flex"
@@ -115,7 +138,7 @@
 <script>
 import Navbar from "../components/Navbar.vue";
 import ClientCredentialsForm from "../components/ClientCredentialsForm.vue";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   data: () => {
     return {
@@ -154,6 +177,7 @@ export default {
   },
   computed: {
     ...mapActions(["loadOrders"]),
+    ...mapGetters(["favoriteItems"]),
   },
   created() {
     this.loadOrdersInProfile();
@@ -215,7 +239,6 @@ p {
   margin: 0;
 }
 .order-wrapper {
-  border-bottom: 1px solid gray;
   padding: 10px 10px 10px 10px;
 }
 .order-item {
@@ -232,5 +255,14 @@ p {
 .delivery-status {
   margin-left: 20px;
   transform: scale(0.9);
+}
+
+.favorites-tooltip {
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-style: italic;
+}
+.favorite-item {
+  margin-bottom: 10px;
 }
 </style>
