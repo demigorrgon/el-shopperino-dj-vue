@@ -10,9 +10,16 @@
       color="success"
       type="gradient"
       style="margin-bottom: 10px"
-      @click="addToCart()"
+      @click="addToCart"
       >Add to cart</vs-button
     >
+    <vs-button
+      radius
+      color="danger"
+      type="gradient"
+      icon="favorite"
+      @click="addToFavorites"
+    ></vs-button>
   </div>
 </template>
 
@@ -24,9 +31,12 @@ export default {
     addToCart() {
       this.$store.commit("addItemToCart", this.$props.product);
     },
+    addToFavorites() {
+      this.$store.commit("addItemToFavorites", this.$props.product);
+    },
   },
   computed: {
-    ...mapMutations(["addItemToCart"]),
+    ...mapMutations(["addItemToCart", "addItemToFavorites"]),
   },
 };
 </script>
