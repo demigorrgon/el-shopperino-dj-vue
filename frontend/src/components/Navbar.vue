@@ -13,10 +13,15 @@
     </div>
     <div class="item-wrapper">
       <vs-navbar-item index="0">
-        <a href="#" v-if="activeUser === null">Home</a>
-        <a href="#" v-else
-          ><i>{{ this.$store.state.user.username }}</i></a
+        <router-link to="#" v-if="activeUser === null">Home</router-link>
+        <!-- <a href="#" v-if="activeUser === null">Home</a> -->
+        <router-link to="/profile" v-else
+          ><i>{{ this.$store.state.user.username }}</i></router-link
         >
+
+        <!-- <a href="/profile" v-else
+          ><i>{{ this.$store.state.user.username }}</i></a
+        > -->
       </vs-navbar-item>
       <vs-spacer></vs-spacer>
       <vs-navbar-item index="1" v-if="activeUser === null">
