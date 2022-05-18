@@ -6,7 +6,7 @@ import HomeView from '@/views/HomeView.vue'
 import CheckoutView from '@/views/CheckoutView.vue'
 import SuccessView from '@/views/SuccessView.vue'
 import ProfileView from '@/views/ProfileView.vue'
-
+import FavoritesView from '@/views/FavoritesView.vue'
 
 
 Vue.use(VueRouter)
@@ -36,6 +36,11 @@ const routes = [
     path: '/profile',
     name: 'Profile',
     component: ProfileView,
+  },
+  {
+    path: '/favorites',
+    name: 'Favorites',
+    component: FavoritesView,
   },
 ]
 
