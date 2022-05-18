@@ -10,6 +10,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     created_by = serializers.SerializerMethodField(read_only=True)
+    created_at = serializers.SerializerMethodField(read_only=True)
     category = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
@@ -31,25 +32,37 @@ class ProductSerializer(serializers.ModelSerializer):
     def get_created_by(self, obj):
         return obj.created_by.username
 
+    def get_created_at(self, obj):
+        return obj.created_at.strftime("%d-%m-%Y %H:%M %Z")
+
     def get_category(self, obj):
         return obj.category.name
 
 
 class CartItemSerializer(serializers.ModelSerializer):
     product = serializers.SerializerMethodField(read_only=True)
+    image = serializers.SerializerMethodField(read_only=True)
+    price = serializers.SerializerMethodField(read_only=True)
 
     def get_product(self, obj):
         return obj.product.name
+
+    def get_price(self, obj):
+        return obj.product.price
+
+    def get_image(self, obj):
+        return f"http://127.0.0.1:8000{obj.product.image.url}"
 
     def to_internal_value(self, data):
         return data
 
     class Meta:
         model = CartItem
-        fields = ("product", "quantity")
+        fields = ("product", "quantity", "image", "price")
 
 
 class OrderSerializer(serializers.ModelSerializer):
+    created_at = serializers.SerializerMethodField(read_only=True)
     items = CartItemSerializer(many=True)
 
     def create(self, validated_data):
@@ -62,6 +75,9 @@ class OrderSerializer(serializers.ModelSerializer):
             )
             order.items.add(cart_item)
         return order
+
+    def get_created_at(self, obj):
+        return obj.created_at.strftime("%d-%m-%Y %H:%M %Z")
 
     class Meta:
         model = Order
