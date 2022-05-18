@@ -101,7 +101,6 @@
                     </vs-row>
                     <p class="order-text">Created at: {{ order.created_at }}</p>
                     <p class="order-text">Total: ${{ order.total_price }}</p>
-                    <button @click="nuke">nuke</button>
                   </vs-col>
                 </vs-row>
               </vs-col>
@@ -149,9 +148,9 @@ export default {
     loadOrdersInProfile() {
       this.$store.dispatch("loadOrders");
     },
-    nuke() {
-      this.$store.commit("emptyOrders");
-    },
+    // nuke() {
+    //   this.$store.commit("emptyOrders");
+    // },
   },
   computed: {
     ...mapActions(["loadOrders"]),
