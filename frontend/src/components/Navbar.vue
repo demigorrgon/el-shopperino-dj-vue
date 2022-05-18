@@ -36,6 +36,9 @@
       <vs-navbar-item index="3" v-if="activeUser !== null">
         <a href="#" @click="toggleCart()">Cart</a>
       </vs-navbar-item>
+      <vs-navbar-item index="4" v-if="activeUser !== null">
+        <router-link to="/favorites">Favorites</router-link>
+      </vs-navbar-item>
     </div>
   </vs-navbar>
 </template>
