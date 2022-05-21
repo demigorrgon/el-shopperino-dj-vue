@@ -31,4 +31,8 @@ const getUsersOrders = (userId) => {
     return httpClient.get('/api/v1/shop/orders/user/' + userId + "/")
 }
 
-export { obtainToken, verifyToken, loadProductsResults, sendOrder, getUsersOrders }
+const getProductBySlug = (slug) => {
+    return httpClient.get('/api/v1/shop/product/' + slug + "/")
+}
+
+export { obtainToken, verifyToken, loadProductsResults, sendOrder, getUsersOrders, getProductBySlug }
