@@ -30,7 +30,12 @@
               ><img class="order-picture" :src="item.image"
             /></vs-col>
             <vs-col vs-w="3"
-              ><p>{{ item.name }} - x{{ item.amount }}</p></vs-col
+              ><p>
+                <router-link :to="'/product/' + item.slug">{{
+                  item.name
+                }}</router-link>
+                - x{{ item.amount }}
+              </p></vs-col
             >
             <vs-col vs-w="3"
               ><p>${{ item.price }}</p></vs-col
@@ -66,7 +71,7 @@ export default {
   },
   components: { Navbar, ErrorModal, ClientCredentialsForm },
   computed: {
-    ...mapGetters(["itemsInCart", "activeUser"]),
+    ...mapGetters(["itemsInCart", "activeUser", "tokenValid"]),
     ...mapMutations(["emptyCartOnOrderSubmission"]),
   },
   methods: {
@@ -111,6 +116,9 @@ export default {
   },
   created() {
     this.orderTotalPrice = this.totalPrice();
+    if (this.tokenValid === false) {
+      this.toggleError();
+    }
   },
 };
 </script>
