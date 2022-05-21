@@ -7,6 +7,8 @@ import CheckoutView from '@/views/CheckoutView.vue'
 import SuccessView from '@/views/SuccessView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import FavoritesView from '@/views/FavoritesView.vue'
+import ProductView from '@/views/ProductView.vue'
+
 
 
 Vue.use(VueRouter)
@@ -41,6 +43,11 @@ const routes = [
     path: '/favorites',
     name: 'Favorites',
     component: FavoritesView,
+  },
+  {
+    path: '/product/:slug',
+    name: 'Product',
+    component: ProductView,
   },
 ]
 
