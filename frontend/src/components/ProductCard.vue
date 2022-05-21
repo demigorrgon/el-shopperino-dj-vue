@@ -2,7 +2,11 @@
   <div class="product-card">
     <img class="product-pic" :src="product.image" />
     <br />
-    <h2>{{ product.name }}</h2>
+    <h2>
+      <router-link :to="'/product/' + product.slug">
+        {{ product.name }}</router-link
+      >
+    </h2>
     <br />
     <p class="product-price">${{ product.price }}</p>
     <p class="product-description">{{ product.description }}</p>
