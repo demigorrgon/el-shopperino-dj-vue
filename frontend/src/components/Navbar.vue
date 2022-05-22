@@ -8,7 +8,9 @@
   >
     <div slot="title">
       <vs-navbar-title style="margin-left: 100px">
-        <a href="/"> <img src="@/assets/goblin-head.png" class="logo" /></a>
+        <router-link to="/">
+          <img src="@/assets/goblin-head.png" class="logo"
+        /></router-link>
       </vs-navbar-title>
     </div>
     <div class="item-wrapper">
