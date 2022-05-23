@@ -1,12 +1,12 @@
+from authapp.api.views import TokenObtainUsernameView
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
 
 # from rest_framework.documentation import include_docs_urls
 # from rest_framework.schemas import get_schema_view
 from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
-from authapp.api.views import TokenObtainUsernameView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -24,6 +24,7 @@ urlpatterns = [
     path("v1/api/", include("authapp.api.urls")),
     path("api/v1/auth/", include("authapp.api.urls")),
     path("api/v1/shop/", include("shop.api.urls")),
+    re_path(r"api/v1/profiles?/", include("profiles.api.urls")),
 ]
 
 if settings.DEBUG:

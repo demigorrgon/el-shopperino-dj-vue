@@ -8,15 +8,13 @@
               radius
               color="danger"
               class="close-button"
+              icon="close"
               style="height: 35px; width: 35px"
-              >x</vs-button
-            ></span
-          >
+            ></vs-button
+          ></span>
         </vs-col>
       </vs-row>
       <div>
-        <!-- <p>Cart I guess</p> -->
-
         <div v-for="(item, index) in itemsInCart" :key="item[index]">
           <vs-row vs-align="center" vs-justify="center">
             <vs-col style="display: inline-flex" vs-align="center">
@@ -31,16 +29,14 @@
               <vs-col vs-w="3">
                 <vs-input
                   type="number"
-                  :placeholder="$store.getters.itemsInCart[index].amount"
                   class="items-amount-cart"
+                  :placeholder="cart[index].amount"
                   :danger="danger"
                   danger-text="Are you sure you want THAT much? Current limit - 20"
                   v-model="amounts[index]"
-                  @input="checkout"
+                  @input="updateCart($event, index)"
                 />
               </vs-col>
-              <!-- <p style="margin-left: 10px">{{ amount }}</p>
-              <p>{{ item.price * amount[index] }}</p> -->
               <vs-button
                 radius
                 color="danger"
@@ -54,8 +50,19 @@
           <br />
         </div>
 
-        <p>Total: ${{ totalPrice }}</p>
-        <button @click="checkout()">checkout</button>
+        <p
+          style="margin-bottom: 10px"
+          v-if="isNaN(totalPrice) === false && amounts.length > 0"
+        >
+          Total: ${{ totalPrice }}
+        </p>
+        <vs-button
+          color="dark"
+          type="filled"
+          @click="confirmCheckout()"
+          style="margin-bottom: 10px"
+          >Checkout</vs-button
+        >
       </div>
     </div>
   </div>
@@ -73,7 +80,7 @@ export default {
   },
   methods: {
     toggleCart() {
-      this.$emit("closeCart");
+      this.$emit("closeCartInChild");
     },
     checkout() {
       let totalPrice = 0;
@@ -86,7 +93,7 @@ export default {
         ) {
           totalPrice +=
             this.itemsInCart[index].amounts * this.itemsInCart[index].price;
-        } else if (this.amounts[index] >= 20) {
+        } else if (this.amounts[index] > 20) {
           this.danger = true;
           this.amounts[index] = 20;
           totalPrice += this.amounts[index] * this.itemsInCart[index].price;
@@ -99,22 +106,33 @@ export default {
         }
       }
       this.totalPrice = totalPrice;
-      this.$router.push("/checkout");
     },
     removeFromCart(index) {
       this.$store.commit("removeItemFromCart", index);
     },
+    updateCart() {
+      this.checkout();
+    },
+    confirmCheckout() {
+      for (let index in this.amounts) {
+        this.cart[index].amount = this.amounts[index];
+      }
+      this.$router.push("/checkout");
+      this.toggleCart();
+    },
   },
   computed: {
     ...mapGetters(["itemsInCart"]),
-    ...mapState(["cart"]),
-    ...mapMutations(["removeItemFromCart"]),
+    ...mapState({
+      cart: (state) => state.cart,
+    }),
+    ...mapMutations(["removeItemFromCart", "setAmountOnItemInCart"]),
   },
-  // watch: {
-  //   amount(old, newAmount) {
-  //     console.log(newAmount);
-  //   },
-  // },
+  mounted() {
+    for (let item in this.itemsInCart) {
+      this.amounts.push(this.itemsInCart[item].amount);
+    }
+  },
 };
 </script>
 
@@ -155,11 +173,13 @@ export default {
   background-color: #fefefe;
   margin: auto;
   padding: 0;
-  border: 1px solid #888;
-  width: 80%;
+  width: 40%;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   animation-name: animatetop;
   animation-duration: 0.4s;
+  border-radius: 3px;
+  margin-top: 10px;
+  margin-bottom: 30px;
 }
 .close-button {
   position: absolute;

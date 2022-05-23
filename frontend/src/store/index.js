@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { verifyToken, loadProductsResults } from '@/api/shortcuts'
+import { verifyToken, loadProductsResults, getUsersOrders, getCategoriesList } from '@/api/shortcuts'
 import jwt_decode from 'jwt-decode'
 import createPersistedState from 'vuex-persistedstate'
 Vue.use(Vuex)
@@ -13,6 +13,9 @@ export default new Vuex.Store({
     tokenValid: null,
     products: null,
     cart: [],
+    orders: [],
+    favorites: [],
+    categories: []
 
   },
   getters: {
@@ -24,6 +27,15 @@ export default new Vuex.Store({
     },
     itemsInCart(state) {
       return state.cart
+    },
+    currentUserOrders(state) {
+      return state.orders
+    },
+    favoriteItems(state) {
+      return state.favorites
+    },
+    getPaginationLength(state) {
+      return state.products.total_pages
     }
   },
   mutations: {
@@ -51,6 +63,7 @@ export default new Vuex.Store({
       state.user = null
       state.accessToken = null
       state.refreshToken = null
+      state.orders = []
     },
     setProducts(state, products) {
       state.products = products
@@ -72,6 +85,24 @@ export default new Vuex.Store({
     },
     emptyCartOnOrderSubmission(state) {
       state.cart = []
+    },
+    setCurrentUserOrders(state, orders) {
+      state.orders = orders
+    },
+    // emptyOrders(state) {
+    //   state.orders = []
+    // }
+    addItemToFavorites(state, product) {
+      if (state.favorites.every((item) => item.id !== product.id) === true) {
+        state.favorites.push(product)
+      }
+    },
+    setCategories(state, categories) {
+      state.categories = categories
+    },
+    setAmountOnItemInCart(state, index, amount) {
+      console.log(index, amount)
+      state.cart[index].amount = amount
     }
   },
   actions: {
@@ -89,6 +120,18 @@ export default new Vuex.Store({
       return loadProductsResults().then((response) => {
         console.log(response.data.response)
         commit('setProducts', response.data)
+      })
+    },
+    loadOrders({ commit, getters }) {
+      return getUsersOrders(getters.activeUser.id).then((response) => {
+        console.log(response)
+        commit('setCurrentUserOrders', response.data.results)
+      })
+    },
+    loadCategories({ commit }) {
+      return getCategoriesList().then((response) => {
+        console.log(response)
+        commit('setCategories', response.data.results)
       })
     }
   },

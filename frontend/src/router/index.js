@@ -5,6 +5,10 @@ import LoginView from '@/views/LoginView.vue'
 import HomeView from '@/views/HomeView.vue'
 import CheckoutView from '@/views/CheckoutView.vue'
 import SuccessView from '@/views/SuccessView.vue'
+import ProfileView from '@/views/ProfileView.vue'
+import FavoritesView from '@/views/FavoritesView.vue'
+import ProductView from '@/views/ProductView.vue'
+
 
 
 Vue.use(VueRouter)
@@ -29,6 +33,21 @@ const routes = [
     path: '/checkout/success',
     name: 'Success',
     component: SuccessView,
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: ProfileView,
+  },
+  {
+    path: '/favorites',
+    name: 'Favorites',
+    component: FavoritesView,
+  },
+  {
+    path: '/product/:slug',
+    name: 'Product',
+    component: ProductView,
   },
 ]
 

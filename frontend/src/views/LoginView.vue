@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <Navbar />
     <h1>Login</h1>
     <br />
     <form>
@@ -35,14 +34,11 @@
 <script>
 import { obtainToken } from "../api/shortcuts.js";
 import { mapMutations } from "vuex";
-import Navbar from "../components/Navbar.vue";
 export default {
   data: () => {
     return { username: "", password: "" };
   },
-  components: {
-    Navbar,
-  },
+  components: {},
   methods: {
     ...mapMutations(["setAccessToken", "setRefreshToken", "authorizeUser"]),
     async login() {
