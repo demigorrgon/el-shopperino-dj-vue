@@ -1,20 +1,52 @@
 <template>
   <div id="app">
+    <Navbar @closeCart="toggleCart" />
+    <vs-row>
+      <vs-col
+        vs-type="flex"
+        vs-justify="center"
+        vs-align="center"
+        vs-w="6"
+        vs-offset="3"
+        class="relogin-modal"
+        v-if="isValid() === false"
+      >
+        <SessionExpired />
+      </vs-col>
+    </vs-row>
+
+    <CartModal @closeCartInChild="toggleCart" v-if="showCartModal" />
+
     <router-view />
   </div>
 </template>
 <script>
 import { mapGetters } from "vuex";
-// import Navbar from "@/components/Navbar.vue";
+import Navbar from "@/components/Navbar.vue";
+import CartModal from "./components/CartModal.vue";
+import SessionExpired from "./components/SessionExpired.vue";
+
 export default {
-  components: {},
+  components: { Navbar, CartModal, SessionExpired },
+  data() {
+    return {
+      showCartModal: false,
+    };
+  },
   mounted() {
     this.$store.dispatch("isTokenValid");
     if (this.$store.getters.tokenValid === false) {
       this.$store.commit("logout");
     }
   },
-  methods: {},
+  methods: {
+    toggleCart() {
+      this.showCartModal = !this.showCartModal;
+    },
+    isValid() {
+      return this.$store.getters.tokenValid;
+    },
+  },
   computed: {
     ...mapGetters(["activeUser", "isTokenValid"]),
   },
@@ -29,6 +61,9 @@ export default {
   color: #2c3e50;
 }
 
+a:hover {
+  text-decoration: underline;
+}
 nav {
   padding: 30px;
 }

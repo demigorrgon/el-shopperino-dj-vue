@@ -1,6 +1,5 @@
 <template>
   <div class="favorites">
-    <Navbar />
     <vs-row>
       <vs-col class="favorites-wrapper" vs-w="6" vs-offset="3">
         <p class="favorites-text">Favorites:</p>
@@ -31,12 +30,9 @@
 </template>
 
 <script>
-import Navbar from "../components/Navbar.vue";
 import { mapGetters } from "vuex";
 export default {
-  components: {
-    Navbar,
-  },
+  components: {},
   computed: {
     ...mapGetters(["favoriteItems"]),
   },

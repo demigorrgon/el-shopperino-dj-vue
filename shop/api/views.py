@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from shop.models import Product, Order
-from shop.serializers import ProductSerializer, OrderSerializer
+from shop.models import Product, Order, Category
+from shop.serializers import ProductSerializer, OrderSerializer, CategorySerializer
 from django.shortcuts import get_object_or_404
 
 # from rest_framework import pagination
@@ -43,3 +43,8 @@ class UsersOrdersViewSet(viewsets.ModelViewSet):
         if self.kwargs["order_id"]:
             order_id = self.kwargs["order_id"]
             return Order.objects.filter(id=order_id).first()
+
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer

@@ -1,6 +1,5 @@
 <template>
   <div class="product-wrapper">
-    <Navbar />
     <vs-row vs-type="flex" class="main-row-wrapper">
       <vs-col vs-w="5" vs-offset="1" class="">
         <!-- <div class="image-part"> -->
@@ -65,12 +64,9 @@
 
 <script>
 import { getProductBySlug } from "../api/shortcuts.js";
-import Navbar from "../components/Navbar.vue";
 import { mapMutations } from "vuex";
 export default {
-  components: {
-    Navbar,
-  },
+  components: {},
   data: () => {
     return {
       productSlug: null,

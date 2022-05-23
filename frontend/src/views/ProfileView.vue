@@ -1,6 +1,5 @@
 <template>
   <div class="profile">
-    <Navbar />
     <vs-row class="wrapper" vs-align="flex-start">
       <vs-col vs-w="2" vs-offset="1" class="left-part">
         <vs-row>
@@ -52,7 +51,6 @@
               >
             </vs-col>
           </vs-row>
-          <!-- </p> -->
         </div>
         <div v-if="showOrders">
           <p class="credentials-tooltip">
@@ -136,7 +134,6 @@
 </template>
 
 <script>
-import Navbar from "../components/Navbar.vue";
 import ClientCredentialsForm from "../components/ClientCredentialsForm.vue";
 import { mapActions, mapGetters } from "vuex";
 export default {
@@ -149,7 +146,6 @@ export default {
     };
   },
   components: {
-    Navbar,
     ClientCredentialsForm,
   },
   methods: {

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { verifyToken, loadProductsResults, getUsersOrders } from '@/api/shortcuts'
+import { verifyToken, loadProductsResults, getUsersOrders, getCategoriesList } from '@/api/shortcuts'
 import jwt_decode from 'jwt-decode'
 import createPersistedState from 'vuex-persistedstate'
 Vue.use(Vuex)
@@ -15,6 +15,7 @@ export default new Vuex.Store({
     cart: [],
     orders: [],
     favorites: [],
+    categories: []
 
   },
   getters: {
@@ -32,6 +33,9 @@ export default new Vuex.Store({
     },
     favoriteItems(state) {
       return state.favorites
+    },
+    getPaginationLength(state) {
+      return state.products.total_pages
     }
   },
   mutations: {
@@ -92,7 +96,13 @@ export default new Vuex.Store({
       if (state.favorites.every((item) => item.id !== product.id) === true) {
         state.favorites.push(product)
       }
-
+    },
+    setCategories(state, categories) {
+      state.categories = categories
+    },
+    setAmountOnItemInCart(state, index, amount) {
+      console.log(index, amount)
+      state.cart[index].amount = amount
     }
   },
   actions: {
@@ -116,6 +126,12 @@ export default new Vuex.Store({
       return getUsersOrders(getters.activeUser.id).then((response) => {
         console.log(response)
         commit('setCurrentUserOrders', response.data.results)
+      })
+    },
+    loadCategories({ commit }) {
+      return getCategoriesList().then((response) => {
+        console.log(response)
+        commit('setCategories', response.data.results)
       })
     }
   },

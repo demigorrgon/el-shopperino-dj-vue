@@ -10,20 +10,23 @@
     <br />
     <p class="product-price">${{ product.price }}</p>
     <p class="product-description">{{ product.description }}</p>
-    <vs-button
-      color="success"
-      type="gradient"
-      style="margin-bottom: 10px"
-      @click="addToCart"
-      >Add to cart</vs-button
-    >
-    <vs-button
-      radius
-      color="danger"
-      type="gradient"
-      icon="favorite"
-      @click="addToFavorites"
-    ></vs-button>
+    <vs-row class="btns-wrapper">
+      <vs-button
+        color="success"
+        type="gradient"
+        style="margin-bottom: 10px"
+        @click="addToCart"
+        class="add-to-cart-btn"
+        >Add to cart</vs-button
+      >
+      <vs-button
+        radius
+        color="danger"
+        type="gradient"
+        icon="favorite"
+        @click="addToFavorites"
+      ></vs-button
+    ></vs-row>
   </div>
 </template>
 
@@ -83,5 +86,12 @@ export default {
 .product-card:hover {
   opacity: 0.9;
   transition-duration: 0.5s;
+}
+.btns-wrapper {
+  margin-left: 30px;
+}
+
+.add-to-cart-btn {
+  margin-right: 30px;
 }
 </style>

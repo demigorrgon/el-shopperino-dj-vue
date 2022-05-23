@@ -1,7 +1,5 @@
 <template>
   <div class="checkout">
-    <Navbar />
-
     <vs-row>
       <vs-col
         vs-w="6"
@@ -57,7 +55,6 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
-import Navbar from "../components/Navbar.vue";
 import ErrorModal from "../components/ErrorModal.vue";
 import ClientCredentialsForm from "../components/ClientCredentialsForm.vue";
 import { sendOrder } from "../api/shortcuts.js";
@@ -69,7 +66,7 @@ export default {
       notLoggedInError: false,
     };
   },
-  components: { Navbar, ErrorModal, ClientCredentialsForm },
+  components: { ErrorModal, ClientCredentialsForm },
   computed: {
     ...mapGetters(["itemsInCart", "activeUser", "tokenValid"]),
     ...mapMutations(["emptyCartOnOrderSubmission"]),
