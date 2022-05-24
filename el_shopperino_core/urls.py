@@ -6,7 +6,10 @@ from django.urls import include, path, re_path
 
 # from rest_framework.documentation import include_docs_urls
 # from rest_framework.schemas import get_schema_view
-from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
+from rest_framework_simplejwt.views import (
+    TokenRefreshView,
+    TokenVerifyView,
+)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -21,7 +24,7 @@ urlpatterns = [
     #     ),
     #     name="coreapi_schema",
     # ),
-    path("v1/api/", include("authapp.api.urls")),
+    # path("v1/api/", include("authapp.api.urls")),
     path("api/v1/auth/", include("authapp.api.urls")),
     path("api/v1/shop/", include("shop.api.urls")),
     re_path(r"api/v1/profiles?/", include("profiles.api.urls")),

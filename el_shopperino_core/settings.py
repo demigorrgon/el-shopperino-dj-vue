@@ -81,7 +81,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "el_shopperino_core.wsgi.application"
 
-
+AUTH_USER_MODEL = "authapp.CustomUser"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 

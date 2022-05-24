@@ -38,6 +38,17 @@ class ProductSerializer(serializers.ModelSerializer):
     def get_category(self, obj):
         return obj.category.name
 
+    # def create(self, validated_data):
+    #     print(validated_data)
+
+
+class ProductCreateSerializer(serializers.ModelSerializer):
+    category = CategorySerializer(many=True)
+
+    class Meta:
+        model = Product
+        fields = ("category", "name", "description", "price", "image")
+
 
 class CartItemSerializer(serializers.ModelSerializer):
     product = serializers.SerializerMethodField(read_only=True)
