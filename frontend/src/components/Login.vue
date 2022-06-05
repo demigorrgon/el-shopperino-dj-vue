@@ -31,23 +31,25 @@
 </template>
 
 <script>
-import { obtainToken } from "../api/shortcuts.js";
-import { mapMutations } from "vuex";
+// import { obtainToken } from "../api/shortcuts.js";
+import { mapActions, mapMutations } from "vuex";
 export default {
   data: () => {
     return { username: "", password: "" };
   },
   methods: {
     ...mapMutations(["setAccessToken", "setRefreshToken", "authorizeUser"]),
-    async login() {
-      const response = await obtainToken(this.username, this.password);
-      const accessToken = await response.data["access"];
-      const refreshToken = await response.data["refresh"];
-      this.setAccessToken(accessToken);
-      this.setRefreshToken(refreshToken);
-      this.authorizeUser();
-      this.$store.dispatch("isTokenValid");
-      this.$router.push("/");
+    ...mapActions(["loginUser"]),
+    login() {
+      // const response = await obtainToken(this.username, this.password);
+      // const accessToken = await response.data["access"];
+      // const refreshToken = await response.data["refresh"];
+      // this.setAccessToken(accessToken);
+      // this.setRefreshToken(refreshToken);
+      // this.authorizeUser();
+      // this.$store.dispatch("isTokenValid");
+      // this.$router.push("/");
+      this.loginUser({ username: this.username, password: this.password });
     },
   },
 };
