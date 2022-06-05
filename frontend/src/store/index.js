@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { verifyToken, loadProductsResults, getUsersOrders, getCategoriesList } from '@/api/shortcuts'
+import { verifyToken, loadProductsResults, getUsersOrders, getCategoriesList, obtainToken } from '@/api/shortcuts'
 import jwt_decode from 'jwt-decode'
 import createPersistedState from 'vuex-persistedstate'
 Vue.use(Vuex)
@@ -114,7 +114,16 @@ export default new Vuex.Store({
       }).catch((err) => {
         console.log(err.response.data.detail); commit('isTokenValid', false)
       })
-
+    },
+    loginUser({ commit, getters }, payload) {
+      return obtainToken(payload.username, payload.password).then(response => {
+        commit('isTokenValid', response.data.access)
+        if (getters.tokenValid) {
+          commit('setAccessToken', response.data.access)
+          commit('setRefreshToken', response.data.refresh)
+          commit('authorizeUser')
+        }
+      })
     },
     loadProducts({ commit }) {
       return loadProductsResults().then((response) => {
