@@ -8,6 +8,8 @@ import SuccessView from '@/views/SuccessView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import FavoritesView from '@/views/FavoritesView.vue'
 import ProductView from '@/views/ProductView.vue'
+import RegisterView from "@/views/RegisterView.vue"
+import VerifyEmailView from "@/views/VerifyEmailView.vue"
 
 
 
@@ -23,6 +25,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: LoginView,
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: RegisterView,
   },
   {
     path: '/checkout',
@@ -49,6 +56,11 @@ const routes = [
     name: 'Product',
     component: ProductView,
   },
+  {
+    path: '/verify-email/',
+    name: 'VerifyEmail',
+    component: VerifyEmailView,
+  }
 ]
 
 const router = new VueRouter({
