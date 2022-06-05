@@ -1,3 +1,4 @@
+import uuid
 from django.contrib.auth.models import (
     AbstractBaseUser,
     PermissionsMixin,
@@ -20,7 +21,7 @@ class CustomUserManager(BaseUserManager):
             username=username,
             first_name=first_name,
             last_name=last_name,
-            **other_fields
+            **other_fields,
         )
         user.set_password(password)
         user.save()
@@ -45,7 +46,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=100)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
-
+    email_verified = models.BooleanField(default=False)
+    email_verification_code = models.UUIDField(
+        max_length=32, default=uuid.uuid4, editable=False
+    )
     country = CountryField(blank=True)
 
     USERNAME_FIELD = "username"
@@ -55,6 +59,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.username
+
+    def get_verify_email_link(self):
+        return f"http://localhost:8000/api/v1/auth/verify-email-code/{self.email_verification_code}"
 
     class Meta:
         ordering = ["pk"]

@@ -198,3 +198,14 @@ SIMPLE_JWT = {
 }
 
 CORS_ALLOWED_ORIGINS = ["http://127.0.0.1:8080", "http://localhost:8080"]
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+DEFAULT_FROM_EMAIL = os.getenv("EMAIL_HOST_USER")
+SERVER_EMAIL = os.getenv("EMAIL_HOST_USER")
+
+EMAIL_HOST = os.getenv("EMAIL_HOST")
+EMAIL_PORT = os.getenv("EMAIL_SERVER_PORT")
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+EMAIL_USE_TLS = True
+# EMAIL_USE_SSL = False

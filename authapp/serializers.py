@@ -15,6 +15,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
             "email",
             "first_name",
             "last_name",
+            "verify_email_link",
         )
 
     def create(self, valid_data):
@@ -24,12 +25,14 @@ class UserCreateSerializer(serializers.ModelSerializer):
             email=valid_data["email"],
             first_name=valid_data["first_name"],
             last_name=valid_data["last_name"],
-            country=valid_data["country"],
+            # country=valid_data["country"],
         )
         return user
 
 
 class UserSerializer(CountryFieldMixin, serializers.ModelSerializer):
+    verify_email_link = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = CustomUser
         fields = [
@@ -40,7 +43,13 @@ class UserSerializer(CountryFieldMixin, serializers.ModelSerializer):
             "is_staff",
             "is_active",
             "country",
+            "email_verified",
+            "email_verification_code",
+            "verify_email_link",
         ]
+
+    def get_verify_email_link(self, obj):
+        return f"/api/v1/auth/verify-email-code/{obj.email_verification_code}"
 
 
 class CustomObtainToken(TokenObtainPairSerializer):
