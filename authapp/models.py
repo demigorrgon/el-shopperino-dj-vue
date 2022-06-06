@@ -60,7 +60,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.username
 
-    def get_verify_email_link(self):
+    def verify_email_link(self):
         return f"http://localhost:8000/api/v1/auth/verify-email-code/{self.email_verification_code}"
 
     class Meta:
