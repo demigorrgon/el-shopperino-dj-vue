@@ -38,9 +38,6 @@ export default {
     if (this.$store.getters.tokenValid === false) {
       this.$store.commit("logout");
     }
-    this.$store.dispatch("loadProducts");
-    this.$store.dispatch("loadOrders");
-    this.$store.dispatch("loadCategories");
   },
   methods: {
     toggleCart() {
