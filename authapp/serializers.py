@@ -57,5 +57,7 @@ class CustomObtainToken(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super().get_token(user)
         token["username"] = user.username
+        token["email"] = user.email
+        token["email_code"] = str(user.email_verification_code)
 
         return token
