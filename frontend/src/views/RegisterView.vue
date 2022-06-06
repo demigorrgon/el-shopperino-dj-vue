@@ -36,7 +36,7 @@
 
 <script>
 import { registerUser } from "../api/shortcuts";
-import { mapActions } from "vuex";
+import { mapActions, mapMutations, mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -48,6 +48,7 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(["setNotVerifiedUser"]),
     ...mapActions(["loginUser"]),
 
     register() {
@@ -57,12 +58,19 @@ export default {
         this.password,
         this.firstName,
         this.lastName
-      ).then((response) => console.log(response.data));
-      this.loginUser({ username: this.username, password: this.password });
-      // this.$router.push("/");
+      ).then((response) => {
+        this.$store.commit("setNotVerifiedUser", response.data);
+      });
+      // this.loginUser({
+      //   username: this.username,
+      //   password: this.password,
+      // }).catch((e) => console.log(e));
+      this.$router.push("/send-email");
     },
   },
-  computed: {},
+  computed: {
+    ...mapGetters(["activeUser"]),
+  },
 };
 </script>
 
