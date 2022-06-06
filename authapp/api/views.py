@@ -94,6 +94,6 @@ class SendMailView(generics.CreateAPIView):
                 settings.EMAIL_HOST_PASSWORD,
                 request.data.get("email"),
                 "Email Verification at El-Shopperino",
-                f"Hey, pls activate yo account by clicking here: \n{user.get_verify_email_link()}",
+                f"Hey, pls activate yo account by clicking here: \n{request.data.get('link')}",
             )
             return Response({"response": "Email has been sent"})
