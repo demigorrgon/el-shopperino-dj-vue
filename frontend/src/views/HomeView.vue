@@ -59,6 +59,11 @@ export default {
   computed: {
     ...mapGetters(["isTokenValid", "getPaginationLength"]),
   },
+  mounted() {
+    this.$store.dispatch("loadProducts");
+    this.$store.dispatch("loadOrders");
+    this.$store.dispatch("loadCategories");
+  },
 };
 </script>
 
