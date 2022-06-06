@@ -37,6 +37,7 @@ export default {
   mounted() {
     this.sendEmail();
     this.mailSent = true;
+    this.$store.commit("setNotVerifiedUser", {});
   },
 };
 </script>
