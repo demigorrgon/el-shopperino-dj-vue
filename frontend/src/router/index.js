@@ -10,7 +10,7 @@ import FavoritesView from '@/views/FavoritesView.vue'
 import ProductView from '@/views/ProductView.vue'
 import RegisterView from "@/views/RegisterView.vue"
 import VerifyEmailView from "@/views/VerifyEmailView.vue"
-
+import SendVerifyEmailView from '@/views/SendVerifyEmailView.vue'
 
 
 Vue.use(VueRouter)
@@ -57,7 +57,12 @@ const routes = [
     component: ProductView,
   },
   {
-    path: '/verify-email/',
+    path: '/send-email',
+    name: 'SendEmail',
+    component: SendVerifyEmailView,
+  },
+  {
+    path: '/verify-email/:emailCode',
     name: 'VerifyEmail',
     component: VerifyEmailView,
   }
