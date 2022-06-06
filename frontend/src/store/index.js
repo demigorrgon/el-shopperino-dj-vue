@@ -110,7 +110,6 @@ export default new Vuex.Store({
       state.categories = categories
     },
     setAmountOnItemInCart(state, index, amount) {
-      console.log(index, amount)
       state.cart[index].amount = amount
     },
     setNotVerifiedUser(state, userData) {
@@ -126,8 +125,8 @@ export default new Vuex.Store({
         if (response.status === 200) {
           commit('isTokenValid', true)
         }
-      }).catch((err) => {
-        console.log(err.response.data.detail); commit('isTokenValid', false)
+      }).catch(() => {
+        commit('isTokenValid', false)
       })
     },
     loginUser({ commit, getters }, payload) {
