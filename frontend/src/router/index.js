@@ -8,7 +8,9 @@ import SuccessView from '@/views/SuccessView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import FavoritesView from '@/views/FavoritesView.vue'
 import ProductView from '@/views/ProductView.vue'
-
+import RegisterView from "@/views/RegisterView.vue"
+import VerifyEmailView from "@/views/VerifyEmailView.vue"
+import SendVerifyEmailView from '@/views/SendVerifyEmailView.vue'
 
 
 Vue.use(VueRouter)
@@ -23,6 +25,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: LoginView,
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: RegisterView,
   },
   {
     path: '/checkout',
@@ -49,6 +56,16 @@ const routes = [
     name: 'Product',
     component: ProductView,
   },
+  {
+    path: '/send-email',
+    name: 'SendEmail',
+    component: SendVerifyEmailView,
+  },
+  {
+    path: '/verify-email/:emailCode',
+    name: 'VerifyEmail',
+    component: VerifyEmailView,
+  }
 ]
 
 const router = new VueRouter({
