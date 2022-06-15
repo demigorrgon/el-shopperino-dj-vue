@@ -1,12 +1,15 @@
-from django.contrib.auth.models import User
+from authapp.models import CustomUser
+
+# from django.contrib.auth.models import User
 from django.db import models
-from django.db.models.signals import post_save, post_delete
+from django.db.models.signals import post_save, pre_delete
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, related_name="profile", on_delete=models.CASCADE)
-    location = models.CharField(max_length=100, null=True, blank=True)
-    bio = models.CharField(max_length=255, null=True, blank=True)
+    user = models.OneToOneField(
+        CustomUser, related_name="profile", on_delete=models.CASCADE
+    )
+    # bio = models.CharField(max_length=255, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -28,5 +31,5 @@ def delete_profile_when_user_deleted(sender, instance, *args, **kwargs):
         user.delete()
 
 
-post_save.connect(create_profile_when_user_created, sender=User)
-post_delete.connect(delete_profile_when_user_deleted, sender=User)
+post_save.connect(create_profile_when_user_created, sender=CustomUser)
+pre_delete.connect(delete_profile_when_user_deleted, sender=CustomUser)

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { verifyToken, loadProductsResults, getUsersOrders, getCategoriesList } from '@/api/shortcuts'
+import { verifyToken, loadProductsResults, getUsersOrders, getCategoriesList, obtainToken } from '@/api/shortcuts'
 import jwt_decode from 'jwt-decode'
 import createPersistedState from 'vuex-persistedstate'
 Vue.use(Vuex)
@@ -15,12 +15,16 @@ export default new Vuex.Store({
     cart: [],
     orders: [],
     favorites: [],
-    categories: []
+    categories: [],
+    notVerifiedUser: {},
 
   },
   getters: {
     activeUser(state) {
       return state.user
+    },
+    notVerifiedUser(state) {
+      return state.notVerifiedUser
     },
     tokenValid(state) {
       return state.tokenValid
@@ -42,7 +46,12 @@ export default new Vuex.Store({
     authorizeUser(state) {
       const decodedToken = jwt_decode(localStorage.getItem('accessToken'))
       // check if valid on top of it
-      state.user = { "id": decodedToken.user_id, "username": decodedToken.username }
+      state.user = {
+        "id": decodedToken.user_id,
+        "username": decodedToken.username,
+        'email': decodedToken.email,
+        'email_uuid': decodedToken.email_code
+      }
     },
     setAccessToken(state, token) {
       // state.accessToken = token;
@@ -101,9 +110,14 @@ export default new Vuex.Store({
       state.categories = categories
     },
     setAmountOnItemInCart(state, index, amount) {
-      console.log(index, amount)
       state.cart[index].amount = amount
+    },
+    setNotVerifiedUser(state, userData) {
+      state.notVerifiedUser = userData
     }
+    // sendVerificationEmail(state){
+
+    // }
   },
   actions: {
     isTokenValid({ commit }) {
@@ -111,10 +125,19 @@ export default new Vuex.Store({
         if (response.status === 200) {
           commit('isTokenValid', true)
         }
-      }).catch((err) => {
-        console.log(err.response.data.detail); commit('isTokenValid', false)
+      }).catch(() => {
+        commit('isTokenValid', false)
       })
-
+    },
+    loginUser({ commit, getters }, payload) {
+      return obtainToken(payload.username, payload.password).then(response => {
+        commit('isTokenValid', true)
+        if (getters.tokenValid) {
+          commit('setAccessToken', response.data.access)
+          commit('setRefreshToken', response.data.refresh)
+          commit('authorizeUser')
+        }
+      })
     },
     loadProducts({ commit }) {
       return loadProductsResults().then((response) => {
@@ -133,6 +156,9 @@ export default new Vuex.Store({
         console.log(response)
         commit('setCategories', response.data.results)
       })
+    },
+    sendVerificationEmail({ commit }) {
+      return commit()
     }
   },
   plugins: [createPersistedState()]
