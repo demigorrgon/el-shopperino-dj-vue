@@ -2,10 +2,14 @@ from django.forms import ValidationError
 from rest_framework import viewsets, generics, permissions
 from authapp.models import CustomUser
 from rest_framework.response import Response
+from rest_framework import status
 
 # from django.contrib.auth.models import User
 from rest_framework_simplejwt.views import TokenObtainPairView
-from authapp.serializers import UserCreateSerializer, UserSerializer, CustomObtainToken
+from authapp.serializers import (
+    UserSerializer,
+    CustomObtainToken,
+)
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 from django.conf import settings
@@ -16,23 +20,20 @@ class UserCreateViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
     queryset = CustomUser.objects.filter(is_active=True)
     pagination_class = None
+    serializer_class = UserSerializer
 
-    def get_serializer_class(self):
-        if self.request.method == "GET":
-            return UserSerializer
-
-        return UserCreateSerializer
-
-    # def get_queryset(self):
-    #     qs = CustomUser.objects.all()
-    #     single_user_id = self.request.query_params.get("id")
-
-    #     if single_user_id:
-    #         qs = CustomUser.objects.filter(id=single_user_id)
-    # def get_object(self):
-    #     if self.kwargs.get("pk"):
-    #         obj = self.kwargs.get("pk")
-    #         return get_object_or_404(CustomUser, id=obj)
+    def create(self, request, *args, **kwargs):
+        data = request.data
+        user = CustomUser.objects.create_user(
+            username=data["username"],
+            password=data["password"],
+            email=data["email"],
+            first_name=data["first_name"],
+            last_name=data["last_name"],
+            # country=valid_data["country"],
+        )
+        serializer = self.serializer_class(user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class TokenObtainUsernameView(TokenObtainPairView):
