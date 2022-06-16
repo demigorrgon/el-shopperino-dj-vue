@@ -4,32 +4,6 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django_countries.serializers import CountryFieldMixin
 
 
-class UserCreateSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
-
-    class Meta:
-        model = CustomUser
-        fields = (
-            "username",
-            "password",
-            "email",
-            "first_name",
-            "last_name",
-            "verify_email_link",
-        )
-
-    def create(self, valid_data):
-        user = CustomUser.objects.create_user(
-            username=valid_data["username"],
-            password=valid_data["password"],
-            email=valid_data["email"],
-            first_name=valid_data["first_name"],
-            last_name=valid_data["last_name"],
-            # country=valid_data["country"],
-        )
-        return user
-
-
 class UserSerializer(CountryFieldMixin, serializers.ModelSerializer):
     verify_email_link = serializers.SerializerMethodField(read_only=True)
 

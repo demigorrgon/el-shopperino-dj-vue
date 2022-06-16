@@ -16,7 +16,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 # urlpatterns = router.urls
 user_list = UserCreateViewSet.as_view({"get": "list", "post": "create"})
 user_detail = UserCreateViewSet.as_view(
-    {"get": "list", "post": "create", "put": "partial_update", "delete": "destroy"}
+    {"get": "list", "put": "partial_update", "delete": "destroy"}
 )
 urlpatterns = format_suffix_patterns(
     [
