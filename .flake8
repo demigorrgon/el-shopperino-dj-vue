@@ -1,0 +1,5 @@
+[flake8]
+exclude =
+    venv,
+    el_shopperino_core/settings.py
+ignore=E501,E731 
