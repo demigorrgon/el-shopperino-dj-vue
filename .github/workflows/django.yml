@@ -50,7 +50,6 @@ jobs:
           SECRET_KEY: ${{secrets.SECRET_KEY}}
       - name: Run tests and collect coverage
         run: pytest --cov .
-      - name: Upload coverage reports to Codecov with GitHub Action
         uses: codecov/codecov-action@v3
         with:
           flags: backend
