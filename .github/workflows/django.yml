@@ -47,8 +47,8 @@ jobs:
           
       - name: Run Tests
         env:
+          CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
           SECRET_KEY: ${{secrets.SECRET_KEY}}
-        run: |
-          pytest --cov=./ --cov-report=xml
-      - name: Upload coverage to Codecov
+        run: coverage run -m pytest
+      - name: Upload coverage reports to Codecov with GitHub Action
         uses: codecov/codecov-action@v2
