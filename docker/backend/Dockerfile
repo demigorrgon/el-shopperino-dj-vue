@@ -4,6 +4,7 @@ COPY . /app
 WORKDIR /app
 
 ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE 1
 ENV PORT=8000
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -18,4 +19,5 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     rm -rf /var/lib/apt/lists/*
 RUN pip3 install --upgrade pip 
 RUN pip3 install -r requirements.txt
-CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
+RUN pip3 install gunicorn
+# CMD ["gunicorn", "server.wsgi", "--bind", "0.0.0.0:8000", "--workers 4", "--threads 4"]
